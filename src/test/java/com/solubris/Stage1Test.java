@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Iterator;
 import java.util.Set;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -14,14 +15,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 class Stage1Test {
     Set<Integer> untested = IntStream.range(1, 101).boxed().collect(Collectors.toSet());
 
-    public FizzBuzz underTest() {
-        return Stage1.fizzBuzz;
+    public Function<Integer, String> underTest() {
+        return new Stage1();
     }
 
     @Test
     void fizzEveryThirdTime() {
         for (int i = 3; i <= 100; i += 3) {
-            String result = underTest().answer(i);
+            String result = underTest().apply(i);
             untested.remove(i);
 
             assertThat(result)
@@ -33,7 +34,7 @@ class Stage1Test {
     @Test
     void buzzEveryFifthTime() {
         for (int i = 5; i <= 100; i += 5) {
-            String result = underTest().answer(i);
+            String result = underTest().apply(i);
             untested.remove(i);
 
             assertThat(result)
@@ -45,7 +46,7 @@ class Stage1Test {
     @Test
     void fizzBuzzEveryFifteenthTime() {
         for (int i = 15; i <= 100; i += 15) {
-            String result = underTest().answer(i);
+            String result = underTest().apply(i);
             untested.remove(i);
 
             assertThat(result)
@@ -60,7 +61,7 @@ class Stage1Test {
         fizzBuzzEveryFifteenthTime();
         for (Iterator<Integer> iterator = untested.iterator(); iterator.hasNext(); ) {
             int i = iterator.next();
-            String result = underTest().answer(i);
+            String result = underTest().apply(i);
             iterator.remove();
             assertThat(result)
                     .isEqualTo(String.valueOf(i));

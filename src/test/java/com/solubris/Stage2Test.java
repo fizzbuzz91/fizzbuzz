@@ -2,6 +2,8 @@ package com.solubris;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.function.Function;
+
 import static com.solubris.FizzBuzz.BUZZ;
 import static com.solubris.FizzBuzz.FIZZ;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -9,14 +11,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 class Stage2Test extends Stage1Test {
 
     @Override
-    public FizzBuzz underTest() {
-        return Stage2.fizzBuzz;
+    public Function<Integer, String> underTest() {
+        return new Stage2();
     }
 
     @Test
     void fizzForEveryThreeInLastDigit() {
         for (int i = 3; i <= 100; i += 10) {
-            String result = underTest().answer(i);
+            String result = underTest().apply(i);
             untested.remove(i);
 
             assertThat(result)
@@ -28,7 +30,7 @@ class Stage2Test extends Stage1Test {
     @Test
     void fizzForEveryThreeInTensDigit() {
         for (int i = 30; i <= 39; i += 1) {
-            String result = underTest().answer(i);
+            String result = underTest().apply(i);
             untested.remove(i);
 
             assertThat(result)
@@ -40,7 +42,7 @@ class Stage2Test extends Stage1Test {
     @Test
     void buzzForEveryFiveInLastDigit() {
         for (int i = 5; i <= 100; i += 10) {
-            String result = underTest().answer(i);
+            String result = underTest().apply(i);
             untested.remove(i);
 
             assertThat(result)
@@ -52,7 +54,7 @@ class Stage2Test extends Stage1Test {
     @Test
     void buzzForEveryFiveInTensDigit() {
         for (int i = 50; i <= 59; i += 1) {
-            String result = underTest().answer(i);
+            String result = underTest().apply(i);
             untested.remove(i);
 
             assertThat(result)
@@ -64,13 +66,13 @@ class Stage2Test extends Stage1Test {
     @Test
     void fizzBuzzForThreeAndFive() {
         String result;
-        result = underTest().answer(35);
+        result = underTest().apply(35);
         untested.remove(35);
 
         assertThat(result)
                 .isEqualTo(FIZZ + BUZZ);
 
-        result = underTest().answer(53);
+        result = underTest().apply(53);
         untested.remove(53);
 
         assertThat(result)

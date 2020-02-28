@@ -2,7 +2,7 @@ package com.solubris;
 
 import java.util.function.Function;
 
-public class FizzBuzz {
+public class FizzBuzz implements Function<Integer, String> {
     public static final String FIZZ = "Fizz";
     public static final String BUZZ = "Buzz";
 
@@ -13,7 +13,8 @@ public class FizzBuzz {
         this.mappers = mappers;
     }
 
-    public String answer(int i) {
+    @Override
+    public String apply(Integer i) {
         StringBuilder result = new StringBuilder();
         for (Function<Integer, String> mapper : mappers) {
             result.append(mapper.apply(i));
